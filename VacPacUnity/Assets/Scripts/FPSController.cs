@@ -27,6 +27,8 @@ public class FPSController : MonoBehaviour
 
     public float fuelConsumptionRate = 0.01f;
 
+    public ParticleSystem slimeJetPack;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -155,6 +157,8 @@ public class FPSController : MonoBehaviour
                 }
 
                 transform.GetComponent<CharacterController>().Move(move * currentVelocity * Time.deltaTime);
+
+                slimeJetPack.Emit(1);
             }
             else
             {
