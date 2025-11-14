@@ -107,14 +107,14 @@ public class FPSController : MonoBehaviour
             print("Not on ground");
             print(flying);
 
-            if (flying == true && PlayerTemp.Instance.currentFuel > 0)
+            if (flying == true && PlayerFuelManager.Instance.currentFuel > 0)
             {
                 //Call Fuel Bar
-                PlayerTemp.Instance.currentFuel -= fuelConsumptionRate;
+                PlayerFuelManager.Instance.currentFuel -= fuelConsumptionRate;
 
-                if (PlayerTemp.Instance.currentFuel < 0f)
+                if (PlayerFuelManager.Instance.currentFuel < 0f)
                 {
-                    PlayerTemp.Instance.currentFuel = 0f;
+                    PlayerFuelManager.Instance.currentFuel = 0f;
                 }
                 
                 float h = Input.GetAxis("Horizontal");

@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerTemp : MonoBehaviour
+public class PlayerFuelManager : MonoBehaviour
 {
-    public static PlayerTemp Instance;
+    public static PlayerFuelManager Instance;
 
     //temp
     public float currenthealth;
@@ -15,6 +16,8 @@ public class PlayerTemp : MonoBehaviour
     public GameObject vacPacObject;
 
     public GameObject gameOverScreen;
+
+    public Image fuelFill;
 
     private void initiateGameOver()
     {
@@ -34,10 +37,21 @@ public class PlayerTemp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        fuelFill.fillAmount = currentFuel / maxFuel;
+
         if (gameOverScreen != null && currenthealth <= 0)
         {
             initiateGameOver();
+        }
+    }
+
+    public void AddFuel(float fuelToAdd)
+    {
+        currentFuel += fuelToAdd;
+
+        if (currentFuel > maxFuel)
+        {
+            currentFuel = maxFuel;
         }
     }
 }

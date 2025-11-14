@@ -7,12 +7,14 @@ public class VacPac : MonoBehaviour
     public ParticleSystem slimeAmmo;
     public float slimeEmitRate = 8f;
     private float slimeEmitTimer;
+    public float slimeFuelConsumptionRate;
 
     [Header("Absorption")]
     public float maxAbsorbDistance = 15f;
     public LayerMask absorbableLayers = ~0;
     public float pullForce = 80f;
     public float minDistanceToAbsorb = 1.2f;
+    public float energyPerAbsorb;
 
     [Header("Effects")]
     public ParticleSystem absorbParticles;
@@ -28,13 +30,15 @@ public class VacPac : MonoBehaviour
     private void Update()
     {
         // Shooting
-        if (Input.GetMouseButton(0) && slimeAmmo != null)
+        if (Input.GetMouseButton(0) && slimeAmmo != null && PlayerFuelManager.Instance.currentFuel > 0)
         {
             slimeEmitTimer += Time.deltaTime;
             if (slimeEmitTimer >= 1f / slimeEmitRate)
             {
                 slimeAmmo.Emit(1);
                 slimeEmitTimer = 0f;
+
+                PlayerFuelManager.Instance.currentFuel -= slimeFuelConsumptionRate;
             }
         }
 
@@ -109,6 +113,8 @@ public class VacPac : MonoBehaviour
     {
         if (obj.TryGetComponent<Absorbable>(out var absorbable))
             absorbable.Absorb(this);
+
+        PlayerFuelManager.Instance.AddFuel(energyPerAbsorb);
     }
 
     private void OnDrawGizmosSelected()
