@@ -3182,7 +3182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17958d3fb230e6a4ea01c77e8d08588e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.1
   destroyBulletOnHit: 1
   bulletTag: Bullet
 --- !u!54 &800725557

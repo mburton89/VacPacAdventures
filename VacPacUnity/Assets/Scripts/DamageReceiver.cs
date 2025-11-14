@@ -28,17 +28,17 @@ public class DamageReceiver : MonoBehaviour
     }
 
     // PHYSICS BULLETS / PROJECTILES (still uses tag for safety)
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag(bulletTag))
-        {
-            float damage = 10f * damageMultiplier;
-            parentDamage?.ApplyDamage(damage);
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag(bulletTag))
+    //    {
+    //        float damage = 10f * damageMultiplier;
+    //        parentDamage?.ApplyDamage(damage);
 
-            if (destroyBulletOnHit)
-                Destroy(collision.gameObject);
-        }
-    }
+    //        if (destroyBulletOnHit)
+    //            Destroy(collision.gameObject);
+    //    }
+    //}
 
     // PARTICLE SYSTEMS: ANY particle with GiveDamage component hurts it
     private void OnParticleCollision(GameObject other)
