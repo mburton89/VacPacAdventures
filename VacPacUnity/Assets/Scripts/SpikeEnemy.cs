@@ -22,6 +22,8 @@ public class SpikeEnemy : MonoBehaviour
     private EnemyAI enemyAI;
     private Transform player;
 
+    public GrowAndShrink innerSpikes;
+
     private void Awake()
     {
         enemyAI = GetComponent<EnemyAI>();
@@ -74,13 +76,16 @@ public class SpikeEnemy : MonoBehaviour
         if (enemyAI.agent != null)
             enemyAI.agent.isStopped = true;
 
-        animator.SetBool("isAttacking", true);
+        //animator.SetBool("isAttacking", true);
+
+        innerSpikes.GrowThenShrink();
+
         AudioManager.Instance.PlaySound("Spike", false);
 
         yield return new WaitForSeconds(0.5f);
 
-        PlayerFuelManager.Instance.currenthealth -= spikeEnemyDamage;
-        animator.SetBool("isAttacking", false);
+        //PlayerFuelManager.Instance.currenthealth -= spikeEnemyDamage;
+        //animator.SetBool("isAttacking", false);
 
         // Resume movement
         if (enemyAI.agent != null)

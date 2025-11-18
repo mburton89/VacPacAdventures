@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,35 +6,30 @@ public class PlayerFuelManager : MonoBehaviour
 {
     public static PlayerFuelManager Instance;
 
-    //temp
-    public float currenthealth;
-    public float maxHealth;
-    public float currentFuel;
-    public float maxFuel;
+    [Header("Health & Damage")]
+    public float currenthealth = 100f;
+    public float maxHealth = 100f;
 
+    public float currentFuel = 100f;
+    public float maxFuel = 100f;
+
+    [Header("UI")]
     public GameObject vacPacObject;
-
     public GameObject gameOverScreen;
-
     public Image fuelFill;
+    public Image healthFill;
 
-    private void initiateGameOver()
+    // Invincibility tracking
+    private bool _isInvincible = false;
+    public bool IsInvincible => _isInvincible; // Optional: for other scripts to check
+
+    private void Start()
     {
-        gameObject.GetComponent<FPSController>().enabled = false;
-        //vacPacObject.GetComponent<VacPackAlpha>().enabled = false;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        gameOverScreen.SetActive(true);
+        Instance = this;
+        currenthealth = maxHealth; // Ensure full health at start
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Instance = this; 
-    }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         fuelFill.fillAmount = currentFuel / maxFuel;
 
@@ -45,13 +39,41 @@ public class PlayerFuelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Public method to deal damage with built-in 2-second invincibility
+    /// </summary>
+    public void TakeDamage(float damage)
+    {
+        if (_isInvincible) return;
+
+        currenthealth -= damage;
+        currenthealth = Mathf.Max(currenthealth, 0);
+
+        // Start invincibility
+        StartCoroutine(InvincibilityFrames(2f));
+
+        healthFill.fillAmount = currenthealth / maxHealth;
+    }
+
+    private IEnumerator InvincibilityFrames(float duration)
+    {
+        _isInvincible = true;
+        // Optional: flash effect here later
+        yield return new WaitForSeconds(duration);
+        _isInvincible = false;
+    }
+
     public void AddFuel(float fuelToAdd)
     {
         currentFuel += fuelToAdd;
+        currentFuel = Mathf.Min(currentFuel, maxFuel);
+    }
 
-        if (currentFuel > maxFuel)
-        {
-            currentFuel = maxFuel;
-        }
+    private void initiateGameOver()
+    {
+        GetComponent<FPSController>().enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        gameOverScreen.SetActive(true);
     }
 }
