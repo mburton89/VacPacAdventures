@@ -53,6 +53,11 @@ public class PlayerFuelManager : MonoBehaviour
         StartCoroutine(InvincibilityFrames(2f));
 
         healthFill.fillAmount = currenthealth / maxHealth;
+
+        if (currenthealth <= 0)
+        {
+            GameOver.Instance.ShowGameOver(UIManager.Instance.highScore + UIManager.Instance.kills);
+        }
     }
 
     private IEnumerator InvincibilityFrames(float duration)

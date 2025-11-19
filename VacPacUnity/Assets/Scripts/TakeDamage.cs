@@ -50,6 +50,8 @@ public class TakeDamage : MonoBehaviour
             Instantiate(explosionParticlePrefab, transform.position, transform.rotation);
         }
 
+        UIManager.Instance.AddKill();
+
         // Destroy the object (you can also use object pooling instead)
         Destroy(gameObject);
     }

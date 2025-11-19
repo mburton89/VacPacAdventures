@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571504840bf484d889b636a7f5a3a667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 65
   healthBarContainer: {fileID: 3400501721071650098}
   healthBar: {fileID: 1675706841822396497}
   explosionParticlePrefab: {fileID: 6254438436135370367, guid: 3abeff5d278244dd19e5304a1abcd912, type: 3}
